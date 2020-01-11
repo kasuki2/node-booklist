@@ -1,0 +1,27 @@
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= user.name %></p>
+<p><%= user.email %></p>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<h3>Add a book</h3>
+<form action="/dashboard" method="POST" >
+    <div>Author:</div>
+    <input type="text" name="author" >
+    <div>Title:</div>
+    <input type="text" name="title" >
+    <input type="text" name="email" value="<%= user.email %>" >
+    <button type="submit" >SAVE</button>
+    <div><span>books:</span><span><%= user.books.length %></span></div>
+    <div>
+
+        <table>
+            <tr><th></th><th>Author</th><th>Title</th><th>Stars</th></tr>
+            <% user.books.forEach(function(book, i){ %>
+                <tr><td><%= i+1 %>.</td><td><%= book.author %></td><td><%= book.title %></td><td onclick="starIncr('<%= book._id %>')"><%= book.stars %></td></tr>
+            <% }); %>
+        </table>
+
+
+
+
+    </div>
+</form>

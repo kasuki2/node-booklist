@@ -1,0 +1,14 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div>Nev:<span><%= name %></span></div>
+      <table>
+
+          <% for(var i=0,aho = books.length; i<aho; i++) {%>
+          <tr><td><%= i+1%>.</td><td><%= books[i].author %></td><td><%= books[i].title %></td><td><%= books[i].stars %></td></tr>
+          <% } %>
+
+      </table>
+      
+      </div>
+   
+  </div>
