@@ -15,6 +15,7 @@ BookUser.findOne({ email: req.user.email }).then(user => {
   if(user){
     var sess = req.session;
     sess.username = req.user.name;
+
     res.render('dashboard', {
       user: req.user,
       
@@ -32,12 +33,45 @@ BookUser.findOne({ email: req.user.email }).then(user => {
   
 );
 
+
+
 router.post('/starring', (req, res) => {
   var sess=req.session;
   var bookid = req.body.bookid;
   var usernev = sess.username;
-  res.send("successfully got round " + bookid + " n: " + usernev);
+  var userid = sess.passport.user;
+
+    BookUser.findById(userid)
+        .then(bookuser => {
+
+          var megvan = "nincs";
+            var aho = bookuser.books.length;
+            for(var i = 0;i<aho;i++){
+              if(bookuser.books[i]._id.toString() == bookid){
+                bookuser.books[i].stars = 3;
+                megvan = "megvan";
+                break;
+              }
+            }
+
+            bookuser.save(function (err, updatedBook) {
+              if(err){
+                  res.send("Nem sikerult")
+
+              } else {
+                  res.send("saved")
+              }
+                
+            })
+
+
+        });
+  // {name:bookuser.name, books:bookuser.books.length}
+ // res.send("successfully got round " + bookid + " n: " + usernev + " id: " + userid);
 });
+
+
+
 
 router.post('/dashboard', (req, res) => {
   const { title, author, email} = req.body;
@@ -48,8 +82,6 @@ router.post('/dashboard', (req, res) => {
     errors.push({ msg: 'Please enter all fields' });
   }
 
-
-  
   if (errors.length > 0) {
     res.render('dashboard', {
       errors,
@@ -91,8 +123,7 @@ router.post('/dashboard', (req, res) => {
 
 router.get('/freelist/:id', function (req, res) {
   const id = req.params.id
-  
-  
+
   BookUser.findById(id)
   .then(bookuser => {
     res.render('freelist', {name:bookuser.name, books:bookuser.books})

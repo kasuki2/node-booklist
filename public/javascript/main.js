@@ -14,13 +14,8 @@ function starIncr(bookid) {
 
 }
 
-function getFileAjax(bookid)
+function getFileAjax(bookid, filename)
 {
-
-
-    var filename = "/starring";
-
-    var send = JSON.stringify({bookid:bookid});
 
     return new Promise(function (resolve, reject){
 
@@ -41,15 +36,18 @@ function getFileAjax(bookid)
         xhttp.open("POST", filename, true);
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(send);
+        xhttp.send(bookid);
     })
 
 }
 
 function callit(bookid) {
-    getFileAjax(bookid).then(function (res) {
+    var send = JSON.stringify({bookid:bookid});
+    var filename = "/starring";
+    getFileAjax(send, filename).then(function (res) {
 
-       alert(res);
+       alert(JSON.stringify(res));
 
     });
 }
+

@@ -10,18 +10,20 @@
     <input type="text" name="title" >
     <input type="text" name="email" value="<%= user.email %>" >
     <button type="submit" >SAVE</button>
-    <div><span>books:</span><span><%= user.books.length %></span></div>
-    <div>
-
-        <table>
-            <tr><th></th><th>Author</th><th>Title</th><th>Stars</th></tr>
-            <% user.books.forEach(function(book, i){ %>
-                <tr><td><%= i+1 %>.</td><td><%= book.author %></td><td><%= book.title %></td><td onclick="starIncr('<%= book._id %>')"><%= book.stars %></td></tr>
-            <% }); %>
-        </table>
 
 
-
-
-    </div>
 </form>
+<div><span>books:</span><span><%= user.books.length %></span></div>
+<div>
+
+    <table>
+        <tr><th></th><th>Author</th><th>Title</th><th>Stars</th></tr>
+        <% user.books.forEach(function(book, i){ %>
+            <tr><td><%= i+1 %>.</td><td><%= book.author %></td><td><%= book.title %></td><td onclick="starIncr('<%= book._id %>')"><%= book.stars %></td></tr>
+        <% }); %>
+    </table>
+
+
+
+
+</div>

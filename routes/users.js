@@ -30,7 +30,7 @@ router.get('/register', forwardAuthenticated, (req, res) => res.render('register
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
-
+    errors.push({ msg: 'Sorry, but registration is suspended.' });
   if (!name || !email || !password || !password2) {
     errors.push({ msg: 'Please enter all fields' });
   }
@@ -44,6 +44,7 @@ router.post('/register', (req, res) => {
   }
 
   if (errors.length > 0) {
+
     res.render('register', {
       errors,
       name,
@@ -52,6 +53,7 @@ router.post('/register', (req, res) => {
       password2
     });
   } else {
+
     User.findOne({ email: email }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists' });
