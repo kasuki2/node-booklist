@@ -38,6 +38,7 @@ BookUser.findOne({ email: req.user.email }).then(user => {
 router.post('/starring', (req, res) => {
   var sess=req.session;
   var bookid = req.body.bookid;
+  var stars = req.body.stars;
   var usernev = sess.username;
   var userid = sess.passport.user;
 
@@ -48,7 +49,7 @@ router.post('/starring', (req, res) => {
             var aho = bookuser.books.length;
             for(var i = 0;i<aho;i++){
               if(bookuser.books[i]._id.toString() == bookid){
-                bookuser.books[i].stars = 3;
+                bookuser.books[i].stars = stars;
                 megvan = "megvan";
                 break;
               }

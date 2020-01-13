@@ -9,12 +9,20 @@ function freelist(azid){
 
 }
 
-function starIncr(bookid) {
-    callit(bookid);
+function starIncr(star, elem) {
+    alert(elem.parentElement.id);
+
+    var send = JSON.stringify({bookid:elem.parentElement.id, stars:star});
+    var filename = "/starring";
+    getFileAjax(send, filename).then(function (res) {
+
+        alert(JSON.stringify(res));
+
+    });
 
 }
 
-function getFileAjax(bookid, filename)
+function getFileAjax(send, filename)
 {
 
     return new Promise(function (resolve, reject){
@@ -36,7 +44,7 @@ function getFileAjax(bookid, filename)
         xhttp.open("POST", filename, true);
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(bookid);
+        xhttp.send(send);
     })
 
 }
