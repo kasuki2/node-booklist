@@ -49,6 +49,9 @@ router.post('/starring', (req, res) => {
             var aho = bookuser.books.length;
             for(var i = 0;i<aho;i++){
               if(bookuser.books[i]._id.toString() == bookid){
+                if(stars == 1 && bookuser.books[i].stars == 1){
+                  stars = 0;
+                }
                 bookuser.books[i].stars = stars;
                 megvan = "megvan";
                 break;
@@ -57,10 +60,10 @@ router.post('/starring', (req, res) => {
 
             bookuser.save(function (err, updatedBook) {
               if(err){
-                  res.send("Nem sikerult")
+                  res.send({error:"zz"})
 
               } else {
-                  res.send("saved")
+                  res.send({stars:stars})
               }
                 
             })

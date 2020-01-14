@@ -10,13 +10,15 @@ function freelist(azid){
 }
 
 function starIncr(star, elem) {
-    alert(elem.parentElement.id);
+    //alert(elem.parentElement.id);
 
     var send = JSON.stringify({bookid:elem.parentElement.id, stars:star});
     var filename = "/starring";
     getFileAjax(send, filename).then(function (res) {
+        var valasz = JSON.parse(res);
 
-        alert(JSON.stringify(res));
+       // alert(valasz.stars);
+        elem.parentElement.innerHTML = starSets(valasz.stars);
 
     });
 
@@ -59,3 +61,27 @@ function callit(bookid) {
     });
 }
 
+function starSets(ss) {
+
+    var ret = "";
+    if(ss == 0){
+        ret += `<span class='emptystar' onclick='starIncr(1, this)'>★</span>`;
+        ret += `<span class='emptystar' onclick='starIncr(2, this)'>★</span>`;
+        ret += `<span class='emptystar' onclick='starIncr(3, this)'>★</span>`;
+    } else if(ss == 1){
+        ret += `<span class='fullstar' onclick='starIncr(1, this)' >★</span>`;
+        ret += `<span class='emptystar' onclick='starIncr(2, this)'>★</span>`;
+        ret += `<span class='emptystar' onclick='starIncr(3, this)'>★</span>`;
+    } else if(ss == 2){
+        ret += `<span class='fullstar' onclick='starIncr(1, this)' >★</span>`;
+        ret += `<span class='fullstar' onclick='starIncr(2, this)'>★</span>`;
+        ret += `<span class='emptystar' onclick='starIncr(3, this)'>★</span>`;
+    } else {
+        ret += `<span class='fullstar' onclick='starIncr(1, this)' >★</span>`;
+        ret += `<span class='fullstar' onclick='starIncr(2, this)'>★</span>`;
+        ret += `<span class='fullstar' onclick='starIncr(3, this)'>★</span>`;
+    }
+
+    return ret;
+
+}
