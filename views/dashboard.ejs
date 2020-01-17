@@ -19,7 +19,7 @@
     <table>
         <tr><th></th><th>Author</th><th>Title</th><th>Stars</th></tr>
         <% user.books.forEach(function(book, i){ %>
-            <tr><td><%= i+1 %>.</td><td><%= book.author %></td><td><%= book.title %></td><td class="starWrapper" id='<%= book._id %>'>
+            <tr id='<%= book._id %>' ><td><%= i+1 %>.</td><td><%= book.author %></td><td><%= book.title %></td><td class="starWrapper" id='<%= book._id %>'>
                        <% if(book.stars == 1){ %>
                             <span class="fullstar" onclick='starIncr(1, this)' >★</span><span class="emptystar" onclick='starIncr(2, this)'>★</span><span class="emptystar" onclick='starIncr(3, this)'>★</span>
                        <% } else if(book.stars == 2){ %>
@@ -29,7 +29,7 @@
                        <% } else { %>
                             <span class="emptystar" onclick='starIncr(1, this)'>★</span><span class="emptystar" onclick='starIncr(2, this)'>★</span><span class="emptystar" onclick='starIncr(3, this)'>★</span>
                        <% } %>
-                </td></tr>
+                </td><td onclick="delBook(this)" >del</td></tr>
         <% }); %>
     </table>
 

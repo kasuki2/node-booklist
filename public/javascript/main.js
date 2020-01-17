@@ -61,6 +61,34 @@ function callit(bookid) {
     });
 }
 
+function delBook(elem) {
+   // alert(elem.parentElement.id);
+
+    if(confirm("Do you really want to delete this book?")){
+
+        var send = JSON.stringify({bookid:elem.parentElement.id});
+        var filename = "/delete";
+        getFileAjax(send, filename).then(function (res) {
+            var valasz = JSON.parse(res);
+
+            alert(valasz.result);
+            if(valasz.result == "ok"){
+                //elem.parentElement.remove();
+                alert("The book has been deleted successfully.");
+                location.reload();
+            } else {
+                alert("Error deleting the book.");
+            }
+
+            // elem.parentElement.innerHTML = starSets(valasz.stars);
+
+        });
+
+    }
+
+}
+
+
 function starSets(ss) {
 
     var ret = "";

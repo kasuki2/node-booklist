@@ -74,8 +74,38 @@ router.post('/starring', (req, res) => {
  // res.send("successfully got round " + bookid + " n: " + usernev + " id: " + userid);
 });
 
+router.post('/delete', (req, res) => {
+
+    var sess=req.session;
+    var bookid = req.body.bookid;
+    var userid = sess.passport.user;
+
+    BookUser.findById(userid)
+        .then(bookuser => {
+            var aho = bookuser.books.length;
+            for(var i = 0;i<aho;i++){
+                if(bookuser.books[i]._id.toString() == bookid){
+
+                    bookuser.books.splice(i,1);
+
+                    break;
+                }
+            }
+
+            bookuser.save(function (err) {
+                if(err){
+                    res.send({result:"error"})
+
+                } else {
+                    res.send({result:"ok"})
+                }
+
+            })
 
 
+        });
+
+});
 
 router.post('/dashboard', (req, res) => {
   const { title, author, email} = req.body;
